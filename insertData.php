@@ -1,7 +1,14 @@
 <?php
-$name = $_POST["name"];
-$email = $_POST["email"];
-$age = $_POST["age"];
+
+// Escape user inputs for security
+if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['icnum']) ){
+    $firstname = mysqli_real_escape_string($con, $_POST['firstname']);
+    $lastname = mysqli_real_escape_string($con, $_POST['lastname']);
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $phone = mysqli_real_escape_string($con, $_POST['phone']);
+    $icnum = mysqli_real_escape_string($con, $_POST['icnum']);
+    
+}
 
 $con = mysqli_connect("localhost","root","");
 if(!$con){
@@ -9,13 +16,13 @@ if(!$con){
 }
 
 mysqli_select_db($con, "selemene");
-$query = "INSERT INTO details(name,email,age) VALUES('$name','$email','$age')";
+$query = "INSERT INTO details(firstname, lastname, email, phone, icnum) VALUES ('$firstname', '$lastname', '$email', '$phone', '$icnum')";
 
 if(!mysqli_query($con,$query)){
-trigger_error(mysqli_error($conn));
+    trigger_error(mysqli_error($con));
 }
-else{
-echo "Data Inserted";
+else{echo "Records added successfully.";
+    redirect("../index.html",true);
 }
 
 //###############################SEND EMAIL TO ELDERLY STARTS HERE ##################################################
@@ -64,6 +71,16 @@ try {
     echo 'Message has been sent';
 } catch (Exception $e) {
     echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+}
+
+ 
+// close connection
+mysqli_close($con);
+
+//redirect page function
+function redirect($url, $permanent){
+    header('Location: '. $url, true, $permanent ? 301:302);
+    exit();
 }
 
 ?>
