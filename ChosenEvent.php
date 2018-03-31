@@ -1,7 +1,25 @@
 <!DOCTYPE html>
+<?php
+include "connectEvents.php";
+
+if(isset($_POST['id'])){
+		$id= $_POST['id'];
+}
+echo $id;
+
+$disp = mysqli_query($conn, "select id,title,image,about,para1,para2,datetime,location from events where id='$id'");
+
+//predifined fetch constants
+define('MYSQL_BOTH',MYSQLI_BOTH);
+define('MYSQL_NUM',MYSQLI_NUM);
+define('MYSQL_ASSOC',MYSQLI_ASSOC);?>
+
 <html lang="en">
 
+
 <head>
+
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,6 +54,7 @@
 	<![endif]-->
 </head>
 
+
 <body>
 
 	<!-- Header -->
@@ -49,7 +68,7 @@
 					<!-- Logo -->
 					<div class="navbar-brand">
 						<a href="index.html">
-							<img class="logo" src="img/logo.png" alt="logo">
+							<img class="logo" src="img/SunriseLogo.png" alt="logo">
 						</a>
 					</div>
 					<!-- /Logo -->
@@ -65,9 +84,9 @@
 				<ul class="main-nav nav navbar-nav navbar-right">
 					<li><a href="index.html#home">Home</a></li>
 					<li><a href="index.html#about">Events</a></li>
-					<li><a href="index.html#portfolio">Portfolio</a></li>
-					<li><a href="index.html#service">Services</a></li>
-					<li><a href="index.html#pricing">Prices</a></li>
+					<li><a href="index.html#portfolio">Gallery</a></li>
+					<li><a href="index.html#service">Clinics</a></li>
+					<li><a href="index.html#pricing">Jobs</a></li>
 					<li><a href="index.html#team">Team</a></li>
 					<li class="has-dropdown"><a>Blog</a>
 						<ul class="dropdown">
@@ -85,12 +104,21 @@
 		<!-- header wrapper -->
 		<div class="header-wrapper sm-padding bg-grey">
 			<div class="container">
-				<h2>MOVE Community - Nature Walk @ Bukit Batok Town Park</h2>
+				<?php
+				//take not of the { bracket start here. later must end
+				while($result = mysqli_fetch_array($disp, MYSQL_ASSOC)){
+				 ?>
+				<h2>
+					<?php
+					echo $result['title'];
+					 ?>
+				</h2>
 			</div>
 		</div>
 		<!-- /header wrapper -->
 
 	</header>
+
 	<!-- /Header -->
 
 	<!-- Blog -->
@@ -106,33 +134,36 @@
 				<main id="main" class="col-md-9">
 					<div class="blog">
 						<div class="blog-img">
-							<img class="img-responsive" src="./img/NatWalk.jpg " alt="" style="width:800px;height:400px;">
+							<!-- <img class="img-responsive" src="./img/TechAwImage.jpg" alt=""> -->
+							<?php
+							echo'<img class="img-responsive" src="data:image/jpeg;base64,'.base64_encode($result['image']).'" alt="" style="width:900px;height:auto" >';
+							?>
+
 						</div>
 						<div class="blog-content">
+							<br><br>
 							<h3>About Workshop:</h3>
-							<p>MOVE’s 1ST nature walk for 2018!! This time round, we will be exploring
-								Bukit Batok Town Park. QUARRY Also known as Xiao Guilin among the locals,
-								Bukit Batok Town Park looks similar to that of Guilin in China, a granite
-								rock sitting within a lake. WILDLIFE A great place for bird watching and nature
-								appreciation. HISTORIC HILL For those with an interest in World War II history,
-								the park has a memorial plague identifying the site where Japanese soldiers built
-								 a shrine at the top of Bukit Batok to commemorate their dead. SIGN GALORE A blog
-								  mentioned one of the unusual features of this park are its signs. She has never
-									 noticed so many different signs in a single park before. </p>
+								 <p>
+									 <?php
+				 					echo $result['about'];
+				 					 ?>
+								 </p>
+
 								 <br>
-
-								<h3>**DISCLAIMER**</h3>
-								<p>By joining any event organized by MOVE Community, you agree that MOVE Community will not
-									 be responsible for any injury or discomfort that happens to you during the event, whether
-									  physically or mentally. You will also agree that you will take responsibility to resolve
-										any conflict you have with other participant(s) by yourself. On the other hand, please
-										 respect the privacy of others and treat others like you want to be treated. MOVE
-										 Community is a LGBT friendly social & community club in Singapore formed in 2013.</p>
+									<p>
+										<?php
+									 echo $result['para1'];
+										?>
+									</p>
+								<br>
+									<p>
+										<?php
+									 echo $result['para2'];
+										?>
+									</p>
 						</div>
-
 				</main>
 				<!-- /Main -->
-
 
 				<!-- Aside -->
 				<aside id="aside" class="col-md-3">
@@ -140,26 +171,34 @@
 					<!-- Submit button -->
 					<form action="eventsform.html">
 						<input type="submit" class="reg-btn" value="REGISTER NOW!">
-					</form>
-					<br><br><br>
+</form>
 					<br><br><br>
 					<!-- /Submit button -->
 
 					<!-- date and time -->
 					<div class="widget">
 						<h3 class="title">DATE AND TIME</h3>
-						<p>Date: 17 Mar (Sat) <br>
-							Meeting Time: 3pm <br>
-							Meeting Place: Bukit GOMABK MRT Station <br>
-							After the walk, we may have dinner at one of the coffee shops opposite the MRT station. </p>
+							<p>
+								<?php
+							 echo $result['datetime'];
+								?>
+							</p>
 					</div>
 					<!-- /date and time -->
 
 					<!-- Location -->
 					<div class="widget">
 						<h3 class="title">LOCATION</h3>
-						<p>Bukit Batok Town Park , Singapore
-							Singapore</p>
+				<!--		<p>The Salvation Army (Block B, Level 2)<br>
+							356 Tanglin Road<br>
+							Singapore</p> -->
+
+							<p>
+								<?php
+							 echo $result['location'];
+						 }
+								?>
+							</p>
 					</div>
 					<!-- /Location -->
 				</aside>
@@ -198,6 +237,10 @@
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 
+
+
 </body>
+
+
 
 </html>

@@ -71,7 +71,7 @@
 					<li><a href="#home">Home</a></li>
 					<li><a href="#about">Events</a></li>
 					<li><a href="#gallery">Gallery</a></li>
-					<li><a href="#service">Cinics</a></li>
+					<li><a href="#service">Clinics</a></li>
 					<li><a href="#pricing">Jobs</a></li>
 					<li><a href="#team">Team</a></li>
 					<li class="has-dropdown"><a href="#blog">Blog</a>
@@ -80,6 +80,14 @@
 						</ul>
 					</li>
 					<li><a href="#contact">Contact</a></li>
+					<li>
+						<form action="admin_panel.php">
+											<input type="submit" class="white-btn" value="Admin">
+					</form>
+				</li>
+
+
+				</nav>
 				</ul>
 				<!-- /Main navigation -->
 
@@ -137,7 +145,11 @@
 						<p>For this 1st workshop, the focus is on creating awareness amongst the senior citizens of the need to
 							change and adopt new technology to keep them connected. The focus for the first session is on using
 							 WhatsApp to community.</p><br>
-						<a href="TechAw.html">Read more</a>
+						<form action="ChosenEvent.php" method = "POST">
+							<!-- the value=1 here is the id number of the event -->
+  					<input type="hidden" name="id" value="1">
+  				<input type = "submit" class="main-btn" name="submit" value="Read more">
+				</form>
 					</div>
 				</div>
 				<!-- /Events 1-->
@@ -150,7 +162,11 @@
 						<p>MOVE’s 1ST nature walk for 2018!! This time round, we will be exploring Bukit Batok Town Park.
 							QUARRY Also known as Xiao Guilin among the locals, Bukit Batok Town Park looks similar to that
 							of Guilin in China, a granite rock sitting within a lake.</p>
-						<a href="NatWalk.html">Read more</a>
+							<form action="ChosenEvent.php" method = "POST">
+								<!-- the value=1 here is the id number of the event -->
+	  					<input type="hidden" name="id" value="2">
+	  				<input type = "submit" class="main-btn" name="submit" value="Read more">
+					</form>
 					</div>
 				</div>
 				<!-- /Events 2 -->
@@ -162,8 +178,11 @@
 						<h3>deMEntia Symposium 2018 – Understanding ME</h3>
 						<p>CREST@Jamiyah Nursing Home proudly presents our first-ever dementia symposium. Join us as we
 							raise awareness and understand dementia in the elderly, and promote mental wellness in the community.</p>
-							<br>
-						<a href="Dementia.html">Read more</a>
+							<form action="ChosenEvent.php" method = "POST">
+								<!-- the value=1 here is the id number of the event -->
+							<input type="hidden" name="id" value="3">
+						<input type = "submit" class="main-btn" name="submit" value="Read more">
+					</form>
 					</div>
 				</div>
 				<!-- /about -->
